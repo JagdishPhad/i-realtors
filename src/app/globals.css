@@ -1,0 +1,144 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ------------------------------------------------------------------ *
+ * Design tokens
+ * Mirrors `tailwind.config.ts` so raw CSS (and third-party widgets)
+ * can consume the same dark luxury palette.
+ * ------------------------------------------------------------------ */
+@layer base {
+  :root {
+    --color-background: #0b132b;
+    --color-background-deep: #020617;
+    --color-surface: #1e293b;
+    --color-gold: #eab308;
+    --color-gold-deep: #d97706;
+    --color-ink: #f8fafc;
+    --color-ink-muted: #94a3b8;
+  }
+
+  * {
+    @apply border-surface-border/60;
+  }
+
+  html {
+    @apply scroll-smooth bg-background-deep;
+    -webkit-tap-highlight-color: transparent;
+    text-size-adjust: 100%;
+  }
+
+  body {
+    @apply bg-background font-sans text-ink antialiased;
+    /* Prevent iOS rubber-band gaps behind fixed CTAs. */
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  ::selection {
+    @apply bg-gold/30 text-ink;
+  }
+
+  :focus-visible {
+    @apply outline-none ring-2 ring-gold ring-offset-2 ring-offset-background;
+  }
+
+  ::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+  }
+
+  ::-webkit-scrollbar-track {
+    @apply bg-background-deep;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    @apply rounded-full bg-surface-raised;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    @apply bg-gold-deep;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.001ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.001ms !important;
+    }
+  }
+}
+
+/* ------------------------------------------------------------------ *
+ * Layout + component primitives used across sections
+ * ------------------------------------------------------------------ */
+@layer components {
+  .container-shell {
+    @apply mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8;
+  }
+
+  .card-surface {
+    @apply rounded-2xl border border-surface-border/70 bg-surface/80 shadow-card backdrop-blur-sm;
+  }
+
+  .btn-base {
+    @apply inline-flex select-none items-center justify-center gap-2 rounded-full px-6 py-3 text-sm font-semibold transition-colors duration-200 disabled:cursor-not-allowed disabled:opacity-60;
+  }
+
+  .btn-gold {
+    @apply btn-base bg-gold text-background-deep hover:bg-gold-deep hover:text-ink active:bg-gold-deep;
+  }
+
+  .btn-outline {
+    @apply btn-base border border-gold/60 text-gold hover:bg-gold-soft hover:text-ink;
+  }
+
+  .btn-ghost {
+    @apply btn-base text-ink-muted hover:text-ink;
+  }
+
+  .badge {
+    @apply inline-flex items-center gap-1.5 rounded-full border border-gold/30 bg-gold-soft px-3 py-1 text-xs font-medium tracking-wide text-gold;
+  }
+
+  .section-eyebrow {
+    @apply text-xs font-semibold uppercase tracking-[0.22em] text-gold;
+  }
+
+  .section-heading {
+    @apply text-display-sm font-bold text-ink;
+  }
+
+  .muted-copy {
+    @apply text-sm leading-relaxed text-ink-muted sm:text-base;
+  }
+
+  .field-input {
+    @apply w-full rounded-xl border border-surface-border bg-background-deep/70 px-4 py-3 text-sm text-ink placeholder:text-ink-muted/70 focus:border-gold focus:outline-none focus:ring-1 focus:ring-gold;
+  }
+}
+
+@layer utilities {
+  .text-gradient-gold {
+    @apply bg-gold-sheen bg-clip-text text-transparent;
+  }
+
+  .safe-bottom {
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+  }
+
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+
+  .no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+}
